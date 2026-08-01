@@ -1,11 +1,11 @@
 ---
 name: LeetCode Study Log
 about: Capture the approach, Go solution, and key takeaways
-title: "[LeetCode]"
+title: "[LeetCode YYYY/MM/DD]"
 labels: ["leetcode", "daily"]
 ---
 
-## 題目資訊
+## 題目資訊（一）
 
 - 題號：
 - 題名：
