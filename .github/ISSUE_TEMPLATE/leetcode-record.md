@@ -1,7 +1,7 @@
 ---
 name: LeetCode Study Log
 about: Capture the approach, Go solution, and key takeaways
-title: "[LeetCode YYYY/MM/DD]"
+title: "[LeetCode] YYYY/MM/DD"
 labels: ["leetcode", "daily"]
 ---
 
