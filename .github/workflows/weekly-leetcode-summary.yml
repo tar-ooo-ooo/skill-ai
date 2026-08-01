@@ -19,18 +19,34 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         with:
           script: |
-            const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000;
             const now = new Date();
-            const weekStart = new Date(now.getTime() - MS_PER_WEEK);
             const { owner, repo } = context.repo;
             const titlePattern = /^\[LeetCode\]\s+\d{4}\/\d{2}\/\d{2}\s*$/;
 
-            const taipeiDate = (date) => new Intl.DateTimeFormat('en-CA', {
-              timeZone: 'Asia/Taipei',
-              year: 'numeric',
-              month: '2-digit',
-              day: '2-digit',
-            }).format(new Date(date));
+            const taipeiParts = (date) => Object.fromEntries(
+              new Intl.DateTimeFormat('en-US', {
+                timeZone: 'Asia/Taipei',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+              }).formatToParts(new Date(date))
+                .filter((part) => part.type !== 'literal')
+                .map((part) => [part.type, part.value]),
+            );
+            const taipeiDate = (date) => {
+              const { year, month, day } = taipeiParts(date);
+              return `${year}/${month}/${day}`;
+            };
+            const today = taipeiParts(now);
+            const localTodayStart = new Date(`${today.year}-${today.month}-${today.day}T00:00:00+08:00`);
+            const daysSinceSunday = new Date(Date.UTC(
+              Number(today.year),
+              Number(today.month) - 1,
+              Number(today.day),
+            )).getUTCDay();
+            const reviewSundayStart = new Date(localTodayStart.getTime() - daysSinceSunday * 24 * 60 * 60 * 1000);
+            const weekStart = new Date(reviewSundayStart.getTime() - 6 * 24 * 60 * 60 * 1000);
+            const sourceEnd = new Date(reviewSundayStart.getTime() + 12 * 60 * 60 * 1000);
 
             const candidates = await github.paginate(github.rest.issues.listForRepo, {
               owner,
@@ -45,14 +61,15 @@ jobs:
                 !issue.pull_request &&
                 titlePattern.test(issue.title) &&
                 new Date(issue.created_at) >= weekStart &&
-                new Date(issue.created_at) <= now,
+                new Date(issue.created_at) < sourceEnd,
               )
               .sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
 
             const body = [
               '# Weekly LeetCode Summary',
               '',
-              `Period: ${taipeiDate(weekStart)} – ${taipeiDate(now)} (Asia/Taipei)`,
+              `Review week: ${taipeiDate(weekStart)}–${taipeiDate(reviewSundayStart)} (Asia/Taipei)`,
+              'Records covered: Monday through Sunday 12:00 (Asia/Taipei).',
               `Records: ${issues.length}`,
               '',
             ];
@@ -153,6 +170,7 @@ jobs:
             await github.rest.issues.create({
               owner,
               repo,
-              title: `[LeetCode Weekly Summary] ${taipeiDate(weekStart)} – ${taipeiDate(now)}`,
+              title: `[LeetCode Weekly Review] ${taipeiDate(weekStart)}–${taipeiDate(reviewSundayStart)}`,
               body: summaryText,
+              labels: ['leetcode', 'weekly'],
             });
