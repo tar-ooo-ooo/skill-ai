@@ -7,10 +7,10 @@ labels: ["leetcode", "daily"]
 
 ## 題目資訊（一）
 
-- 題號：
-- 題名：
-- 連結：
-- 難度：Easy / Medium / Hard
+- 題號： **N**
+- 題名： **Name**
+- 連結： [**Url**]()
+- 難度：**Easy** / **Medium** / **Hard**
 - 主題：Array / Hash Table / DP / Graph / Tree / ...
 
 ## 第一次思路
