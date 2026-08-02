@@ -131,7 +131,7 @@ jobs:
               body: JSON.stringify({
                 model: 'gpt-5.6-luna',
                 reasoning: { effort: 'none' },
-                max_output_tokens: 1800,
+                max_output_tokens: 3600,
                 store: false,
                 instructions: [
                   'Write every explanation in Taiwan Traditional Chinese (zh-TW). Keep English only for unavoidable technical terms, code, and original issue titles.',
