@@ -10,8 +10,8 @@ labels: ["leetcode", "daily"]
 - 題號： **N**
 - 題名： **Name**
 - 連結： [**Url**]()
-- 難度：**Easy** / **Medium** / **Hard**
-- 主題：Array / Hash Table / DP / Graph / Tree / ...
+- 難度：**`Easy`** / **`Medium`** / **`Hard`**
+- 主題：**`Array`** / **`Hash Table`** / **`DP`** / **`Graph`** / **`Tree`** / ...
 
 ## 第一次思路
 
