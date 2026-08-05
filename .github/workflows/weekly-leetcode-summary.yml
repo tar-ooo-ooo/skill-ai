@@ -21,7 +21,7 @@ jobs:
           script: |
             const now = new Date();
             const { owner, repo } = context.repo;
-            const titlePattern = /^\[LeetCode\]\s+\d{4}\/\d{2}\/\d{2}\s*$/;
+            const titlePattern = /^\[LeetCode\]\s+(\d{4}\/\d{2}\/\d{2})(?:\s*[（(]\d+[）)])?\s*$/u;
 
             const taipeiParts = (date) => Object.fromEntries(
               new Intl.DateTimeFormat('en-US', {
@@ -52,18 +52,36 @@ jobs:
               owner,
               repo,
               state: 'all',
-              since: weekStart.toISOString(),
               per_page: 100,
             });
 
             const issues = candidates
+              .filter((issue) => !issue.pull_request)
+              .map((issue) => {
+                const match = issue.title.match(titlePattern);
+                if (!match) return null;
+
+                const [year, month, day] = match[1].split('/').map(Number);
+                const calendarDate = new Date(Date.UTC(year, month - 1, day));
+                if (
+                  calendarDate.getUTCFullYear() !== year ||
+                  calendarDate.getUTCMonth() !== month - 1 ||
+                  calendarDate.getUTCDate() !== day
+                ) return null;
+
+                return {
+                  ...issue,
+                  recordDate: new Date(`${match[1].replace(/\//g, '-')}T00:00:00+08:00`),
+                };
+              })
               .filter((issue) =>
-                !issue.pull_request &&
-                titlePattern.test(issue.title) &&
-                new Date(issue.created_at) >= weekStart &&
-                new Date(issue.created_at) < sourceEnd,
+                issue &&
+                issue.recordDate >= weekStart &&
+                issue.recordDate < sourceEnd,
               )
-              .sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+              .sort((a, b) =>
+                a.recordDate - b.recordDate || new Date(a.created_at) - new Date(b.created_at),
+              );
 
             const body = [
               '# Weekly LeetCode Summary',
@@ -75,7 +93,7 @@ jobs:
             ];
 
             if (issues.length === 0) {
-              body.push('_No LeetCode records were created during this period._');
+              body.push('_No LeetCode records have a title date within this period._');
             }
 
             for (const issue of issues) {
@@ -95,7 +113,8 @@ jobs:
                 '',
                 `- Status: ${issue.state}`,
                 `- Labels: ${labels}`,
-                `- Created: ${taipeiDate(issue.created_at)}`,
+                `- Record date: ${taipeiDate(issue.recordDate)}`,
+                `- Issue created: ${taipeiDate(issue.created_at)}`,
                 '',
                 '### Issue body',
                 '',
