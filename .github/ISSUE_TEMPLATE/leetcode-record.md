@@ -6,7 +6,7 @@ labels: ["leetcode", "daily"]
 assignees: tar-ooo-ooo
 ---
 
-## 題目資訊（一）
+## 題目資訊
 
 - 題號： **N**
 - 題名： **Name**
