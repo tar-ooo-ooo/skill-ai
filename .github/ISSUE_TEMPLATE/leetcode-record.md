@@ -10,6 +10,6 @@ assignees: tar-ooo-ooo
 
 - 題號： **N**
 - 題名： **Name**
-- 連結： [**Url**]()
+- 連結： [**https://leetcode.com/problems/{url}/**](https://leetcode.com/problems/{url}/)
 - 難度：**`Easy`** / **`Medium`** / **`Hard`**
 - 主題：**`Array`** / **`Hash Table`** / **`DP`** / **`Graph`** / **`Tree`** / ...
