@@ -21,7 +21,7 @@ jobs:
           script: |
             const now = new Date();
             const { owner, repo } = context.repo;
-            const titlePattern = /^\[LeetCode\]\s+(\d{4}\/\d{2}\/\d{2})(?:\s*[（(]\d+[）)])?\s*$/u;
+            const titlePattern = /^\[LeetCode\]\s+(\d{4}\/\d{2}\/\d{2})(?:_\d+)?\s*$/u;
 
             const taipeiParts = (date) => Object.fromEntries(
               new Intl.DateTimeFormat('en-US', {
