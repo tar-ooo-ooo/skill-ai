@@ -1,0 +1,18 @@
+{
+  "name": "pun-pun",
+  "version": "0.1.0",
+  "description": "為清楚而輕鬆的回覆加入自然的繁體中文諧音梗。",
+  "author": {
+    "name": "Pun-pun 開發者"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Pun-pun",
+    "shortDescription": "為回覆加入自然的中文諧音梗。",
+    "longDescription": "Pun-pun 會在不犧牲清楚度與合宜語氣的前提下，為回覆點綴輕鬆的繁體中文諧音梗。",
+    "developerName": "Pun-pun 開發者",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": "用自然的繁體中文諧音梗回答我。"
+  }
+}

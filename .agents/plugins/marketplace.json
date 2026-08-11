@@ -1,0 +1,20 @@
+{
+  "name": "pun-pun-marketplace",
+  "interface": {
+    "displayName": "Pun-pun 插件市集"
+  },
+  "plugins": [
+    {
+      "name": "pun-pun",
+      "source": {
+        "source": "local",
+        "path": "./plugins/pun-pun"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
