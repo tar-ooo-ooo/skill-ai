@@ -10,3 +10,4 @@
 | RAG Demo | RAG demo 專案。 | [rag-demo](https://github.com/tar-ooo-ooo/rag-demo) |
 | Go Redis-like | Go 模擬 Redis 專案。 | [go-redis-like](https://github.com/tar-ooo-ooo/go-redis-like) |
 | Tetris | 全手寫俄羅斯方塊專案。 | [tetris](https://github.com/tar-ooo-ooo/tetris) |
+| Event Scope | 活動管理與瀏覽平台，使用 Kafka 與 SSE 處理即時事件。 | [event-scope](https://github.com/tar-ooo-ooo/event-scope) |
